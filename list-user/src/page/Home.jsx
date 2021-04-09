@@ -8,11 +8,13 @@ import '../App.css'
 
 export default function HomePage() {
     const [dataUser, setDataUser] = useState([]);
+    const [result, setResult] = useState(10);
+    const url = "https://randomuser.me/api?page=2&results=";
     useEffect(() => {
         getDataApi()
     }, [])
     const getDataApi = async () => {
-        let response = await axios.get('https://randomuser.me/api?page=2&results=10')
+        let response = await axios.get(`${url}${result}`)
         let data = _.get(response, "data.results", [])
         for (let i = 0; i < data.length; i++) {
             data[i].name = data[i].name.last
@@ -23,7 +25,8 @@ export default function HomePage() {
         setDataUser(data)
     }
     const handleLoadMore = async () => {
-        let response = await axios.get('https://randomuser.me/api?page=2&results=20')
+        setResult(result + 5)
+        let response = await axios.get(`${url}${result}`)
         let data = _.get(response, "data.results", [])
         for (let i = 0; i < data.length; i++) {
             data[i].name = data[i].name.last
