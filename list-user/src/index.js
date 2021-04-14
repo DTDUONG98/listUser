@@ -1,15 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import configStore from './store/store';
 import 'antd/dist/antd.css';
 
+const store = configStore();
+
 ReactDOM.render(
-  <React.StrictMode>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/> 
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 

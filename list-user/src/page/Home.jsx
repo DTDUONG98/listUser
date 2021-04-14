@@ -1,17 +1,23 @@
 import { React, useState, useEffect } from 'react'
+import { useSelector, useDispatch} from 'react-redux'
 import TableForm from '../components/Table'
 import { Button, Tooltip } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import _ from 'lodash'
 import '../App.css'
+import { fetchListUser } from '../actions/users';
 
-export default function HomePage() {
+
+const HomePage = () => {
+    const dispatch = useDispatch();
+    const users = useSelector(state => state)
     const [dataUser, setDataUser] = useState([]);
     const [result, setResult] = useState(10);
     const url = "https://randomuser.me/api?page=2&results=";
     useEffect(() => {
-        getDataApi()
+        // getDataApi()
+        dispatch(fetchListUser())
     }, [])
     const getDataApi = async () => {
         let response = await axios.get(`${url}${result}`)
@@ -38,9 +44,10 @@ export default function HomePage() {
     }
     return (
         <div className="container">
+            {/* Hello Saga */}
             <h1>List User</h1>
             <TableForm data={dataUser} />
-            <div className="button-load-more" style={{marginTop: 50}}>
+            <div className="button-load-more" style={{ marginTop: 50 }}>
                 <Tooltip title="load more">
                     <Button type="primary" shape="round" icon={<DownloadOutlined />} size="large" onClick={handleLoadMore}>
                         LOAD MORE
@@ -50,3 +57,4 @@ export default function HomePage() {
         </div>
     )
 }
+export default (HomePage);
