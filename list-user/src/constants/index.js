@@ -1,5 +1,2 @@
-export const STATUS_CODE = {
-    SUCCESS: 200,
-    CREATED: 201,
-    UPDATED: 202,
-};
+export const API_ENPOINT = 'https://randomuser.me/api?page=2&results=';
+export const LIMIT_ITEM = 10;

@@ -1,23 +1,37 @@
-import * as listUserType from '../constants/list.user';
+import * as listUserConstants from '../constants/list.user';
+import * as userApi from '../apis/users';
+import _ from 'lodash'
 
-export const fetchListUser = () => {
-    return {
-        type: listUserType.GET_USERS,
+export const getListUser = () => {
+    return dispatch => {
+        dispatch(getListPending())
+        userApi.getListUsers()
+            .then(response => { 
+                const data = _.get(response, "data.results", [])
+                dispatch(getListSuccess(data)) 
+            })
+            .catch(err => { dispatch(getListError(err)) })
     }
 }
 
-export const fetchListSuccess = data => {
+export const getListPending = () => {
     return {
-        type: listUserType.GET_USERS_SUCCESS,
+        type: listUserConstants.GET_USERS,
+    }
+}
+
+export const getListSuccess = (data) => {
+    return {
+        type: listUserConstants.GET_USERS_SUCCESS,
         payload: {
             data,
         },
     }
 }
 
-export const fetchListError = error => {
+export const getListError = (error) => {
     return {
-        type: listUserType.GET_USERS_FAIL,
+        type: listUserConstants.GET_USERS_FAIL,
         payload: {
             error,
         },

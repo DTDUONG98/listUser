@@ -6,18 +6,20 @@ import { DownloadOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import _ from 'lodash'
 import '../App.css'
-import { fetchListUser } from '../actions/users';
+import { getListUser } from '../actions/users';
+
 
 
 const HomePage = () => {
     const dispatch = useDispatch();
-    const users = useSelector(state => state)
+    const users = useSelector(state => state.users.listUser)
+    console.log('users', users)
     const [dataUser, setDataUser] = useState([]);
     const [result, setResult] = useState(10);
     const url = "https://randomuser.me/api?page=2&results=";
     useEffect(() => {
-        // getDataApi()
-        dispatch(fetchListUser())
+        getDataApi()
+        dispatch(getListUser())
     }, [])
     const getDataApi = async () => {
         let response = await axios.get(`${url}${result}`)

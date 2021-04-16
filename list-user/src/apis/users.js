@@ -1,8 +1,6 @@
-import axios from 'axios'
-
-const url = 'https://randomuser.me/api?page=2&results=';
-const param = 10;
+import axiosService from '../services/axiosServices';
+import {API_ENPOINT, LIMIT_ITEM} from '../constants/index';
 
 export const getListUsers = () => {
-    return axios.get(`${url}${param}`);
+    return axiosService.get(`${API_ENPOINT}${LIMIT_ITEM}`);
 }
