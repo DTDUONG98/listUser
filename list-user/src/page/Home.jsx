@@ -6,7 +6,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import _ from 'lodash'
 import '../App.css'
-import { getListUser } from '../actions/users';
+import { getListUser, getListPending } from '../actions/users';
 
 
 
@@ -19,18 +19,17 @@ const HomePage = () => {
     const url = "https://randomuser.me/api?page=2&results=";
     useEffect(() => {
         getDataApi()
-        dispatch(getListUser())
+        // dispatch(getListUser()) // redux-thunk
+        dispatch(getListPending());
     }, [])
     const getDataApi = async () => {
-        let response = await axios.get(`${url}${result}`)
-        let data = _.get(response, "data.results", [])
-        for (let i = 0; i < data.length; i++) {
-            data[i].name = data[i].name.last
-            data[i].location = data[i].location.street.name
-            data[i].age = data[i].dob.age
-            data[i].avatar = data[i].picture.large
+        for (let i = 0; i < users.length; i++) {
+            users[i].name = users[i].name.last
+            users[i].location = users[i].location.street.name
+            users[i].age = users[i].dob.age
+            users[i].avatar = users[i].picture.large
         }
-        setDataUser(data)
+        setDataUser(users)
     }
     const handleLoadMore = async () => {
         setResult(result + 5)
